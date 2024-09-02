@@ -22,9 +22,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 400px; /* Adjust height as needed */
+    height: 370px; /* Adjust height as needed */
     position: absolute; /* Ensure container is a positioning reference */
-    margin-top: -300px;
+    margin-top: -380px;
 }
 
 .header {
@@ -124,13 +124,13 @@ h2 {
 
 .recommendations-container {
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
+    padding: 47px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     width: 350px; /* Same width as the container */
     text-align: left; /* Align text to the left for English */
     color: #333;
-    margin-top: 500px; /* Increased space between container and recommendations-container */
+    margin-top: 450px; /* Increased space between container and recommendations-container */
     position: absolute; /* Positioning relative to the surrounding elements */
 }
 
