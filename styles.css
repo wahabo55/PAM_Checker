@@ -22,8 +22,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 400px;
-    position: absolute;
+    height: 400px; /* Adjust height as needed */
+    position: absolute; /* Ensure container is a positioning reference */
     margin-top: -300px;
 }
 
@@ -58,7 +58,7 @@ input[type="password"] {
 ul#recommendations {
     list-style: none;
     padding: 0;
-    text-align: right;
+    text-align: right; /* Align text to the right */
     margin-bottom: 20px;
 }
 
@@ -124,11 +124,11 @@ h2 {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    width: 350px;
+    width: 350px; /* Same width as the container */
     text-align: right;
     color: #333;
-    margin-top: 450px;
-    position: absolute;
+    margin-top: 450px; /* Increased space between container and recommendations-container */
+    position: absolute; /* Positioning relative to the surrounding elements */
 }
 
 .recommendations-container h3 {
@@ -137,18 +137,19 @@ h2 {
     color: #4b3b3b;
 }
 
+
 .recommendations-container ul li.valid {
-    color: #aaa;
-    text-decoration: line-through;
+    color: #aaa; /* Light gray color for met recommendations */
+    text-decoration: line-through; /* Strikethrough text */
 }
 
 .recommendations-container ul li.invalid {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
+    color: rgb(0, 0, 0); /* Red color for unmet recommendations */
+    text-decoration: none; /* No strikethrough for unmet recommendations */
 }
 
 footer {
-    background-color: #0e113bc4;
+    background-color: #0e113bc4; /* Dark blue background */
     color: white;
     text-align: center;
     padding: 10px;
@@ -157,68 +158,4 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container, .recommendations-container {
-        width: 90%;
-        margin-top: 0;
-        position: static; /* Remove absolute positioning */
-        margin-bottom: 20px;
-    }
-
-    .container {
-        height: auto; /* Allow the container to adjust its height */
-    }
-
-    .recommendations-container {
-        margin-top: 20px; /* Space between containers */
-    }
-
-    input[type="password"], #clearPassword {
-        font-size: 16px;
-        padding: 10px;
-    }
-
-    ul#recommendations li {
-        font-size: 14px;
-    }
-
-    h2, h3 {
-        font-size: 22px;
-    }
-
-    p {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container, .recommendations-container {
-        width: 100%;
-        margin-top: 0;
-        padding: 15px;
-    }
-
-    .logo {
-        width: 80px;
-    }
-
-    input[type="password"], #clearPassword {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    ul#recommendations li {
-        font-size: 13px;
-    }
-
-    h2, h3 {
-        font-size: 20px;
-    }
-
-    p {
-        font-size: 14px;
-    }
 }
