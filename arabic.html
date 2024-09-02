@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص قوة كلمة المرور - الهيئة العامة للقوى العاملة</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <!-- Include custom font for Arabic text -->
+    <style>
+        @media print {
+            /* Ensure strength meter and text are visible when printing */
+            .strength-meter, #strengthText {
+                display: block !important;
+            }
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+        }
+        .button-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .button-container button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .button-container button:hover {
+            background-color: darkred;
+        }
+
+        /* Hide the audio element */
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body onload="playWelcomeMessage()">
+    <div class="button-container">
+        <button onclick="goBack()">×</button>
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
+            <h2>فحص قوة كلمة المرور</h2>
+        </div>
+        <input type="password" id="password" placeholder="أدخل كلمة المرور" oninput="checkPasswordStrength()">
+        <div class="strength-meter" id="strengthMeter" style="display: none;"></div>
+        <p id="strengthText"></p>
+        <button id="clearPassword" onclick="clearPassword()">مسح</button>
+    </div>
+
+    <!-- Recommendations container -->
+    <div class="recommendations-container">
+        <h3>توصيات:</h3>
+        <ul id="recommendations">
+            <li class="invalid">يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل.</li>
+            <li class="invalid">يجب أن تحتوي كلمة المرور على حرف كبير.</li>
+            <li class="invalid">يجب أن تحتوي كلمة المرور على حرف صغير.</li>
+            <li class="invalid">يجب أن تحتوي كلمة المرور على رقم.</li>
+            <li class="invalid">يجب أن تحتوي كلمة المرور على رمز خاص.</li>
+        </ul>
+    </div>
+
+    <footer>
+        الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت
+    </footer>
+
+    <!-- Audio element for playing the welcome message -->
+    <audio id="welcomeAudio" src="welcome.mp3" preload="auto" loop></audio>
+
+    <script>
+        function playWelcomeMessage() {
+            const audio = document.getElementById('welcomeAudio');
+            audio.play().catch(error => {
+                console.error('Error playing audio:', error);
+            });
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthMeter = document.getElementById('strengthMeter');
+            const strengthText = document.getElementById('strengthText');
+            const recommendations = document.querySelectorAll('#recommendations li');
+            let strength = 0;
+
+            // Check password strength
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[\W]/.test(password)) strength++;
+
+            // Update strength meter
+            strengthMeter.className = `strength-meter strength-${strength}`;
+            strengthMeter.style.display = 'block'; // Show the strength meter
+
+            // Update strength text in Arabic
+            let text;
+            switch (strength) {
+                case 0:
+                case 1:
+                    text = "ضعيف جدًا";
+                    break;
+                case 2:
+                    text = "ضعيف";
+                    break;
+                case 3:
+                    text = "متوسط";
+                    break;
+                case 4:
+                    text = "قوي";
+                    break;
+                case 5:
+                    text = "قوي جدًا";
+                    break;
+                default:
+                    text = "";
+            }
+            strengthText.textContent = text;
+
+            // Update recommendations
+            recommendations.forEach((li, index) => {
+                if (
+                    (index === 0 && password.length >= 8) ||
+                    (index === 1 && /[A-Z]/.test(password)) ||
+                    (index === 2 && /[a-z]/.test(password)) ||
+                    (index === 3 && /[0-9]/.test(password)) ||
+                    (index === 4 && /[\W]/.test(password))
+                ) {
+                    li.classList.remove('invalid');
+                    li.classList.add('valid');
+                } else {
+                    li.classList.remove('valid');
+                    li.classList.add('invalid');
+                }
+            });
+        }
+
+        function clearPassword() {
+            document.getElementById('password').value = '';
+            document.getElementById('strengthMeter').className = 'strength-meter'; // Reset the strength meter
+            document.getElementById('strengthMeter').style.display = 'none'; // Hide the strength meter
+            document.getElementById('strengthText').textContent = ''; // Clear strength text
+            // Reset recommendations
+            document.querySelectorAll('#recommendations li').forEach(li => {
+                li.classList.add('invalid');
+                li.classList.remove('valid');
+            });
+        }
+
+        function goBack() {
+            window.location.href = 'welcome.html'; // Change 'welcome.html' to the actual path of your welcome page
+        }
+    </script>
+</body>
+</html>

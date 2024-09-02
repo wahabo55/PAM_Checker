@@ -1,0 +1,161 @@
+body {
+    font-family: 'Cairo', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #000000ce, #14151630), url('building.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    direction: rtl;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px; /* Adjust height as needed */
+    position: absolute; /* Ensure container is a positioning reference */
+    margin-top: -300px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 0px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+ul#recommendations {
+    list-style: none;
+    padding: 0;
+    text-align: right; /* Align text to the right */
+    margin-bottom: 20px;
+}
+
+ul#recommendations li {
+    margin: 5px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+ul#recommendations li.valid::before {
+    content: '✔';
+    color: green;
+    margin-left: 10px;
+}
+
+ul#recommendations li.invalid::before {
+    content: '✘';
+    color: red;
+    margin-left: 10px;
+}
+
+#clearPassword {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+.strength-meter {
+    height: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    background-color: #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.strength-0 { background-color: #ddd; }
+.strength-1 { background-color: #ff4d4d; }
+.strength-2 { background-color: #ff884d; }
+.strength-3 { background-color: #ffd24d; }
+.strength-4 { background-color: #88ff4d; }
+.strength-5 { background-color: #4dff88; }
+
+p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #4b3b3b;
+}
+
+.recommendations-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 350px; /* Same width as the container */
+    text-align: right;
+    color: #333;
+    margin-top: 450px; /* Increased space between container and recommendations-container */
+    position: absolute; /* Positioning relative to the surrounding elements */
+}
+
+.recommendations-container h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #4b3b3b;
+}
+
+
+.recommendations-container ul li.valid {
+    color: #aaa; /* Light gray color for met recommendations */
+    text-decoration: line-through; /* Strikethrough text */
+}
+
+.recommendations-container ul li.invalid {
+    color: rgb(0, 0, 0); /* Red color for unmet recommendations */
+    text-decoration: none; /* No strikethrough for unmet recommendations */
+}
+
+footer {
+    background-color: #0e113bc4; /* Dark blue background */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

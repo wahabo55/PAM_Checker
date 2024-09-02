@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص قوة كلمة المرور - الهيئة العامة للقوى العاملة</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f4f4f4;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #003366; /* Dark blue background */
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #002244; /* Slightly darker blue on hover */
+        }
+        footer {
+            background-color: #0e113bc4; /* Dark blue background */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .logo {
+            width: 150px; /* Adjust the size of the logo */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
+            <h2>Welcome to Password Checker!</h2>
+            <h1>مرحباً بكم في فاحص كلمة المرور!</h1>
+            <button class="button" onclick="window.location.href='English.html'">English</button>
+            <button class="button" onclick="window.location.href='Arabic.html'">العربية</button>
+        </div>
+    </div>
+
+    <footer>
+        الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت
+    </footer>
+</body>
+</html>

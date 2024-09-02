@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker - Public Authority of Manpower</title>
+    <link rel="stylesheet" href="styles2.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <style>
+        @media print {
+            /* Ensure strength meter and text are visible when printing */
+            .strength-meter, #strengthText {
+                display: block !important;
+            }
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 150px; /* Adjust the size of the logo */
+            margin-bottom: 20px;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .strength-meter {
+            width: 100%;
+            max-width: 300px;
+            height: 10px;
+            margin-bottom: 10px;
+        }
+        #strengthText {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #003366; /* Dark blue background */
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #002244; /* Slightly darker blue on hover */
+        }
+        .recommendations-container {
+            text-align: left;
+            max-width: 300px;
+            width: 100%;
+        }
+        footer {
+            background-color: #0e113bc4; /* Dark blue background */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .button-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .button-container button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 40px; /* Matches the height to center the text vertically */
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex; /* Use flexbox to center the content */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .button-container button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio element for background music -->
+    <audio id="welcomeAudio2" src="weclome2.mp3" preload="auto" loop></audio>
+
+
+    <div class="button-container">
+        <button onclick="goBack()">×</button>
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="PamLogo.png" alt="Public Authority of Manpower Logo" class="logo">
+            <h2>Password Strength Checker</h2>
+        </div>
+        <input type="password" id="password" placeholder="Enter your password" oninput="checkPasswordStrength()">
+        <div class="strength-meter" id="strengthMeter" style="display: none;"></div>
+        <p id="strengthText"></p>
+        <button id="clearPassword" onclick="clearPassword()">Clear</button>
+    </div>
+
+    <!-- Recommendations container -->
+    <div class="recommendations-container">
+        <h3>Recommendations:</h3>
+        <ul id="recommendations">
+            <li class="invalid">Password must be at least 8 characters long.</li>
+            <li class="invalid">Password must contain an uppercase letter.</li>
+            <li class="invalid">Password must contain a lowercase letter.</li>
+            <li class="invalid">Password must contain a number.</li>
+            <li class="invalid">Password must contain a special character.</li>
+        </ul>
+    </div>
+
+    <footer>
+        Public Authority of Manpower © 2024, All rights reserved to the Public Authority of Manpower - Kuwait
+    </footer>
+    <script>
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthMeter = document.getElementById('strengthMeter');
+            const strengthText = document.getElementById('strengthText');
+            const recommendations = document.querySelectorAll('#recommendations li');
+            let strength = 0;
+
+            // Check password strength
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[\W]/.test(password)) strength++;
+
+            // Update strength meter
+            strengthMeter.className = `strength-meter strength-${strength}`;
+            strengthMeter.style.display = 'block'; // Show the strength meter
+
+            // Update strength text in English
+            let text;
+            switch (strength) {
+                case 0:
+                case 1:
+                    text = "Very Weak";
+                    break;
+                case 2:
+                    text = "Weak";
+                    break;
+                case 3:
+                    text = "Moderate";
+                    break;
+                case 4:
+                    text = "Strong";
+                    break;
+                case 5:
+                    text = "Very Strong";
+                    break;
+                default:
+                    text = "";
+            }
+            strengthText.textContent = text;
+
+            // Update recommendations
+            recommendations.forEach((li, index) => {
+                if (
+                    (index === 0 && password.length >= 8) ||
+                    (index === 1 && /[A-Z]/.test(password)) ||
+                    (index === 2 && /[a-z]/.test(password)) ||
+                    (index === 3 && /[0-9]/.test(password)) ||
+                    (index === 4 && /[\W]/.test(password))
+                ) {
+                    li.classList.remove('invalid');
+                    li.classList.add('valid');
+                } else {
+                    li.classList.remove('valid');
+                    li.classList.add('invalid');
+                }
+            });
+        }
+
+        function clearPassword() {
+            document.getElementById('password').value = '';
+            document.getElementById('strengthMeter').className = 'strength-meter'; // Reset the strength meter
+            document.getElementById('strengthMeter').style.display = 'none'; // Hide the strength meter
+            document.getElementById('strengthText').textContent = ''; // Clear strength text
+            // Reset recommendations
+            document.querySelectorAll('#recommendations li').forEach(li => {
+                li.classList.add('invalid');
+                li.classList.remove('valid');
+            });
+        }
+
+        function goBack() {
+            window.location.href = 'welcome.html'; // Change 'welcome.html' to the actual path of your welcome page
+        }
+    </script>
+</body>
+</html>
