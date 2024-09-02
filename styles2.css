@@ -22,7 +22,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 370px; /* Adjust height as needed */
+    height: 400px; /* Adjust height as needed */
     position: absolute; /* Ensure container is a positioning reference */
     margin-top: -380px;
 }
