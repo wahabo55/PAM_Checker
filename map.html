@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Map</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(to right, #003366, #0099cc); /* Gradient background */
+            padding: 10px 20px; /* More padding for a balanced layout */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            flex-shrink: 0;
+            height: 80px; /* Increased height for a more prominent header */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .logo {
+            width: 100px; /* Larger logo */
+        }
+        .header-text {
+            font-size: 22px; /* Larger and more readable font size */
+            font-family: 'Arial', sans-serif; /* Modern and clean font */
+            margin-left: 15px;
+            letter-spacing: 1px; /* Letter spacing for better readability */
+        }
+        .back-button {
+            padding: 12px 24px; /* More padding for a more prominent button */
+            margin-right: 50px;
+            font-size: 18px; /* Slightly larger font size */
+            border: none;
+            border-radius: 8px; /* Rounded corners for a modern look */
+            cursor: pointer;
+            background: linear-gradient(90deg, #ff0066, #cc0099); /* Gradient background for the button */
+            color: white;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            
+        }
+        .back-button:hover {
+            background-color: #cc0066; /* Slightly darker on hover */
+            box-shadow: 0 0 12px rgba(255, 0, 102, 0.7); /* More pronounced glow on hover */
+            transform: scale(1.08); /* Slightly larger on hover */
+        }
+
+        /* Main Map Container Styling */
+        .map-container {
+            position: relative; /* Position relative to place the mask absolutely */
+            flex: 1; /* Fills remaining space between header and footer */
+            display: flex;
+        }
+        .full-screen-map {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: auto; /* Blocks clicks on the iframe */
+            z-index: 10; /* Ensure it is on top of the iframe */
+        }
+        .mask-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 25%; /* 25% from the left */
+            height: 100%;
+            background: transparent; /* Colorless */
+            pointer-events: auto; /* Blocks clicks on the iframe */
+            z-index: 10; /* Ensure it is on top of the iframe */
+        }
+        .mask-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 17%; /* 25% from the right */
+            height: 100%;
+            background: transparent; /* Colorless */
+            pointer-events: auto; /* Blocks clicks on the iframe */
+            z-index: 10; /* Ensure it is on top of the iframe */
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(to right, #003366, #0099cc); /* Gradient background */
+            padding: 10px 20px; /* More padding for a balanced layout */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            flex-shrink: 0;
+            height: 20px; /* Increased height for a more prominent header */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Element -->
+    <audio autoplay loop>
+        <source src="mapsound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Header with Logo, Text, and Back Button -->
+    <div class="header">
+        <div style="display: flex; align-items: center;">
+            <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
+            <div class="header-text">Public Authority of Manpower</div>
+        </div>
+        <button class="back-button" onclick="window.location.href='welcome.html';">Back | رجوع</button>
+    </div>
+
+    <!-- Full Screen Map Container -->
+    <div class="map-container">
+        <iframe class="full-screen-map" src="https://threatmap.checkpoint.com/" title="Cyber Attacks Map"></iframe>
+        <!-- Hidden Masks -->
+        <div class="mask-left"></div>
+        <div class="mask-right"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Public Authority of Manpower © 2024, All rights reserved to the Public Authority of Manpower - Kuwait
+    </footer>
+</body>
+</html>
