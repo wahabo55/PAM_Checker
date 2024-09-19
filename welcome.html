@@ -4,71 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فحص قوة كلمة المرور - الهيئة العامة للقوى العاملة</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            font-family: 'Cairo', sans-serif;
             display: flex;
             flex-direction: column;
-            background-color: #f4f4f4;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('building.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
         .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 20px; /* Increased padding */
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            min-height: 600px; /* Increased minimum height */
+            box-sizing: border-box;
         }
-        .button {
-            padding: 15px 30px;
-            font-size: 18px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #003366; /* Dark blue background */
-            color: white;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #002244; /* Slightly darker blue on hover */
-        }
-        footer {
-            background-color: #0e113bc4; /* Dark blue background */
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            border-top: 1px solid #ddd;
-            position: fixed;
-            bottom: 0;
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px; /* Increased padding */
             width: 100%;
+            max-width: 800px;
+            min-height: 400px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
         }
-        
+
+        .content-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
         .logo {
-            width: 150px; /* Adjust the size of the logo */
-            margin-bottom: 20px;
+            width: 160px; /* Increased logo width */
+            margin-bottom: 30px; /* Increased margin */
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px; /* Increased font size */
+            color: #2c3e50;
+            margin-bottom: 20px; /* Increased margin */
+        }
+
+        h1 {
+            font-size: 36px; /* Increased font size */
+            color: #2980b9;
+            margin-bottom: 30px; /* Increased margin */
+        }
+
+        .button {
+            padding: 20px 35px; /* Increased padding */
+            font-size: 20px; /* Increased font size */
+            margin: 15px; /* Increased margin */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #2980b9;
+            color: white;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #1f618d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Enhanced footer styling */
+        footer {
+            background: linear-gradient(90deg, #2980b9, #2c3e50);
+            color: white;
+            padding: 15px; /* Increased padding */
+            height: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            margin: 0;
+            padding: 10px; /* Increased padding */
+            font-size: 16px; /* Increased font size */
+            text-align: center;
+        }
+
+        footer .footer-icons {
+            margin-top: 15px; /* Increased margin */
+        }
+
+        footer .footer-icons a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px; /* Increased margin */
+            font-size: 24px; /* Increased font size */
+            transition: color 0.3s ease;
+        }
+
+        footer .footer-icons a:hover {
+            color: #f1c40f;
+        }
+
+        /* Responsive behavior */
+        @media (max-width: 768px) {
+            .logo {
+                width: 140px; /* Adjusted logo width */
+            }
+
+            h2 {
+                font-size: 28px; /* Adjusted font size */
+            }
+
+            h1 {
+                font-size: 32px; /* Adjusted font size */
+            }
+
+            .button {
+                padding: 15px 30px; /* Adjusted padding */
+                font-size: 18px; /* Adjusted font size */
+            }
+
+            footer p {
+                font-size: 14px; /* Adjusted font size */
+            }
+
+            footer .footer-icons a {
+                font-size: 20px; /* Adjusted font size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-box {
+                padding: 20px; /* Adjusted padding */
+            }
+
+            .logo {
+                width: 120px; /* Adjusted logo width */
+            }
+
+            h2 {
+                font-size: 24px; /* Adjusted font size */
+            }
+
+            h1 {
+                font-size: 26px; /* Adjusted font size */
+            }
+
+            .button {
+                padding: 12px 25px; /* Adjusted padding */
+                font-size: 16px; /* Adjusted font size */
+            }
+
+            footer p {
+                font-size: 12px; /* Adjusted font size */
+            }
+
+            footer .footer-icons a {
+                font-size: 18px; /* Adjusted font size */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div>
+        <div class="content-box">
             <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
             <h2>Welcome to Password Checker!</h2>
             <h1>مرحباً بكم في فاحص كلمة المرور!</h1>
             <button class="button" onclick="window.location.href='English.html'">English</button>
-            <button class="button" onclick="window.location.href='Arabic.html'">العربية</button>
+            <button class="button" onclick="window.location.href='arabic2.html'">العربية</button>
+            <button class="button" onclick="window.location.href='map.html'">Attack Map | خريطة الاختراق</button>
         </div>
     </div>
 
+    <!-- Final Enhanced Footer with Centered Text -->
     <footer>
-        الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت
+        <p>الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت</p>
+        <div class="footer-icons">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+        </div>
     </footer>
+
+    <!-- Include FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
