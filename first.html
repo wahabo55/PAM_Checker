@@ -17,12 +17,10 @@
             align-items: center;
             height: 100vh;
             background: #f0f0f0;
-            overflow: hidden; /* Prevent scrolling */
         }
 
         .logo {
-            width: 30%; /* Responsive logo size */
-            max-width: 200px; /* Max size for larger screens */
+            width: 200px;
             opacity: 0;
             transform: scale(0.8);
             animation: fadeInScale 1.5s ease-out forwards;
@@ -45,14 +43,14 @@
         }
 
         .text {
-            font-size: 5vw; /* Responsive font size */
+            font-size: 24px;
             color: #2980b9;
             text-align: center;
             margin-top: 10px;
         }
 
         .subtext {
-            font-size: 4vw; /* Responsive font size */
+            font-size: 20px;
             color: #2c3e50;
             text-align: center;
         }
@@ -65,25 +63,6 @@
 
         .fade-out {
             animation: fadeOut 1s forwards;
-        }
-
-        /* Media queries for tablets and phones */
-        @media (max-width: 768px) {
-            .text {
-                font-size: 6vw; /* Increase font size for smaller devices */
-            }
-            .subtext {
-                font-size: 5vw; /* Increase font size for smaller devices */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .text {
-                font-size: 8vw; /* Further increase font size for mobile */
-            }
-            .subtext {
-                font-size: 6vw; /* Further increase font size for mobile */
-            }
         }
     </style>
     <script>
