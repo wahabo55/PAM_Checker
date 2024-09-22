@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Map</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(to right, #003366, #0099cc); /* Gradient background */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            flex-shrink: 0;
+            height: 80px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            width: 100px;
+        }
+        .header-text {
+            font-size: 22px;
+            font-family: 'Arial', sans-serif;
+            margin-left: 15px;
+            letter-spacing: 1px;
+        }
+        .button-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .back-button, .test-button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #ff0066, #cc0099);
+            color: white;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .back-button:hover, .test-button:hover {
+            background-color: #cc0066;
+            box-shadow: 0 0 12px rgba(255, 0, 102, 0.7);
+            transform: scale(1.08);
+        }
+
+        /* Main Map Container Styling */
+        .map-container {
+            position: relative;
+            flex: 1;
+            display: flex;
+        }
+        .full-screen-map {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .mask-left, .mask-right {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background: transparent;
+            pointer-events: auto;
+            z-index: 10;
+        }
+        .mask-left {
+            left: 0;
+            width: 25%;
+        }
+        .mask-right {
+            right: 0;
+            width: 17%;
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(to right, #003366, #0099cc);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            flex-shrink: 0;
+            height: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                height: 60px;
+                padding: 10px;
+            }
+            .logo {
+                width: 80px; /* Smaller logo on tablets */
+            }
+            .header-text {
+                font-size: 18px; /* Smaller font size for tablets */
+                margin-left: 10px;
+            }
+            .back-button, .test-button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                height: 50px;
+                padding: 8px;
+            }
+            .logo {
+                width: 60px; /* Smaller logo for phones */
+            }
+            .header-text {
+                font-size: 16px; /* Smaller font size for phones */
+                margin-left: 8px;
+            }
+            .back-button, .test-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            .button-container {
+                gap: 10px; /* Less space between buttons on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Element -->
+    <audio autoplay loop>
+        <source src="mapsound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Header with Logo, Text, and Buttons -->
+    <div class="header">
+        <div style="display: flex; align-items: center;">
+            <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
+            <div class="header-text">Public Authority of Manpower</div>
+        </div>
+        <div class="button-container">
+            <button class="back-button" onclick="window.location.href='welcome.html';">Back | رجوع</button>
+            <button class="test-button" onclick="window.location.reload();">Test Again | افحص مرة اخرى</button>
+        </div>
+    </div>
+
+    <!-- Full Screen Map Container -->
+    <div class="map-container">
+        <iframe class="full-screen-map" src="https://www.virustotal.com/gui/home/upload" title="file checker"></iframe>
+        <!-- Hidden Masks -->
+        <div class="mask-left"></div>
+        <div class="mask-right"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Public Authority of Manpower © 2024, All rights reserved to the Public Authority of Manpower - Kuwait
+    </footer>
+</body>
+</html>
