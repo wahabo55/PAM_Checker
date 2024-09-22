@@ -15,47 +15,85 @@
 
         /* Header Styling */
         .header {
-            background: linear-gradient(to right, #003366, #0099cc); /* Gradient background */
-            padding: 10px 20px; /* More padding for a balanced layout */
+            background: linear-gradient(to right, #003366, #0099cc);
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: white;
             flex-shrink: 0;
-            height: 80px; /* Increased height for a more prominent header */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            height: 80px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .logo {
-            width: 100px; /* Larger logo */
+            width: 100px;
         }
         .header-text {
-            font-size: 22px; /* Larger and more readable font size */
-            font-family: 'Arial', sans-serif; /* Modern and clean font */
+            font-size: 22px;
+            font-family: 'Arial', sans-serif;
             margin-left: 15px;
-            letter-spacing: 1px; /* Letter spacing for better readability */
+            letter-spacing: 1px;
         }
         .back-button {
-            padding: 12px 24px; /* More padding for a more prominent button */
+            padding: 12px 24px;
             margin-right: 50px;
-            font-size: 18px; /* Slightly larger font size */
+            font-size: 18px;
             border: none;
-            border-radius: 8px; /* Rounded corners for a modern look */
+            border-radius: 8px;
             cursor: pointer;
-            background: linear-gradient(90deg, #ff0066, #cc0099); /* Gradient background for the button */
+            background: linear-gradient(90deg, #ff0066, #cc0099);
             color: white;
             transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
-            
         }
         .back-button:hover {
-            background-color: #cc0066; /* Slightly darker on hover */
-            box-shadow: 0 0 12px rgba(255, 0, 102, 0.7); /* More pronounced glow on hover */
-            transform: scale(1.08); /* Slightly larger on hover */
+            background-color: #cc0066;
+            box-shadow: 0 0 12px rgba(255, 0, 102, 0.7);
+            transform: scale(1.08);
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                text-align: center;
+            }
+            .header-text {
+                font-size: 18px;
+                margin-left: 0;
+            }
+            .logo {
+                width: 80px;
+            }
+            .back-button {
+                font-size: 16px;
+                padding: 10px 20px;
+                margin-right: 0;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px;
+            }
+            .header-text {
+                font-size: 16px;
+            }
+            .logo {
+                width: 60px;
+            }
+            .back-button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
         }
 
         /* Main Map Container Styling */
         .map-container {
-            position: relative; /* Position relative to place the mask absolutely */
-            flex: 1; /* Fills remaining space between header and footer */
+            position: relative;
+            flex: 1;
             display: flex;
         }
         .full-screen-map {
@@ -63,47 +101,48 @@
             height: 100%;
             border: none;
         }
+
         .mask {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: auto; /* Blocks clicks on the iframe */
-            z-index: 10; /* Ensure it is on top of the iframe */
+            pointer-events: auto;
+            z-index: 10;
         }
         .mask-left {
             position: absolute;
             top: 0;
             left: 0;
-            width: 25%; /* 25% from the left */
+            width: 25%;
             height: 100%;
-            background: transparent; /* Colorless */
-            pointer-events: auto; /* Blocks clicks on the iframe */
-            z-index: 10; /* Ensure it is on top of the iframe */
+            background: transparent;
+            pointer-events: auto;
+            z-index: 10;
         }
         .mask-right {
             position: absolute;
             top: 0;
             right: 0;
-            width: 17%; /* 25% from the right */
+            width: 17%;
             height: 100%;
-            background: transparent; /* Colorless */
-            pointer-events: auto; /* Blocks clicks on the iframe */
-            z-index: 10; /* Ensure it is on top of the iframe */
+            background: transparent;
+            pointer-events: auto;
+            z-index: 10;
         }
 
         /* Footer Styling */
         footer {
-            background: linear-gradient(to right, #003366, #0099cc); /* Gradient background */
-            padding: 10px 20px; /* More padding for a balanced layout */
+            background: linear-gradient(to right, #003366, #0099cc);
+            padding: 10px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             flex-shrink: 0;
-            height: 20px; /* Increased height for a more prominent header */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            height: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
