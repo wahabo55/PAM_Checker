@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فحص قوة كلمة المرور - الهيئة العامة للقوى العاملة</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>أداة فحص قوة كلمة المرور - الهيئة العامة للقوى العاملة</title>
+    <link rel="stylesheet" href="styles5.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
-    <!-- Include custom font for Arabic text -->
     <style>
         @media print {
-            /* Ensure strength meter and text are visible when printing */
             .strength-meter, #strengthText {
                 display: block !important;
             }
@@ -21,11 +19,151 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            position: relative;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #000000ce, #14151630), url('building.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            direction: rtl; /* Right-to-left for Arabic */
+            
         }
-        .container {
-            flex: 1;
-            padding: 20px;
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('building.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -1;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 600px; /* Increased max-width for larger screens */
+            margin: 20px auto;
+        }
+        .container, .recommendations-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px; /* Increased max-width for larger screens */
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 15px;
+        }
+        .password-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 18px;
+            box-sizing: border-box;
+        }
+        ul#recommendations {
+            list-style: none;
+            padding: 0;
+            text-align: right;
+            margin-bottom: 25px;
+        }
+        ul#recommendations li {
+            margin: 10px 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            direction: rtl; /* Right-to-left for Arabic */
+        }
+        ul#recommendations li.valid::before {
+            content: '✔';
+            color: green;
+            margin-right: 15px;
+        }
+        ul#recommendations li.invalid::before {
+            content: '✘';
+            color: red;
+            margin-right: 15px;
+        }
+        #clearPassword {
+            margin-top: 25px;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        .strength-meter {
+            height: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            background-color: #ddd;
+            transition: width 0.3s ease, background-color 0.3s ease;
+            width: 0; /* Initially, the meter is empty */
+        }
+        .strength-0 { background-color: #ddd; }
+        .strength-1 { background-color: #ff4d4d; }
+        .strength-2 { background-color: #ff884d; }
+        .strength-3 { background-color: #ffd24d; }
+        .strength-4 { background-color: #88ff4d; }
+        .strength-5 { background-color: #4dff88; }
+        p {
+            font-size: 20px;
+            color: #555;
+            margin-top: 15px;
+        }
+        h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #4b3b3b;
+        }
+        .recommendations-container h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #4b3b3b;
+        }
+        .recommendations-container ul li.valid {
+            color: #aaa;
+            text-decoration: line-through;
+        }
+        .recommendations-container ul li.invalid {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+        }
+        footer {
+            background-color: #2786bdc4;
+            color: white;
+            text-align: center;
+            padding: 15px; /* Increased padding */
+            font-size: 16px; /* Increased font size */
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
         .button-container {
             position: fixed;
@@ -38,10 +176,10 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 24px;
-            line-height: 40px;
+            width: 50px;
+            height: 50px;
+            font-size: 28px;
+            line-height: 50px;
             text-align: center;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -49,130 +187,198 @@
         .button-container button:hover {
             background-color: darkred;
         }
-
-        /* Hide the audio element */
-        audio {
-            display: none;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container, .recommendations-container {
+                width: 90%;
+                margin: 10px auto;
+                padding: 20px; /* Adjusted padding for smaller screens */
+                font-size: 16px; /* Adjusted font size */
+            }
+            .logo {
+                width: 80px; /* Adjusted logo width */
+            }
+            input[type="password"] {
+                font-size: 16px; /* Adjusted font size */
+            }
+            #clearPassword {
+                padding: 10px 20px; /* Adjusted padding */
+                font-size: 16px; /* Adjusted font size */
+            }
+        }
+        @media (max-width: 480px) {
+            .container, .recommendations-container {
+                width: 95%;
+                margin: 10px auto;
+                padding: 15px; /* Adjusted padding for very small screens */
+                font-size: 14px; /* Adjusted font size */
+            }
+            .logo {
+                width: 60px; /* Adjusted logo width */
+            }
+            input[type="password"] {
+                font-size: 14px; /* Adjusted font size */
+            }
+            #clearPassword {
+                padding: 8px 16px; /* Adjusted padding */
+                font-size: 14px; /* Adjusted font size */
+            }
         }
     </style>
 </head>
-<body onload="playWelcomeMessage()">
+<body>
+    <!-- Audio element for background music -->
+    <audio id="welcomeAudio2" src="weclome2.mp3" preload="auto" loop></audio>
+
     <div class="button-container">
         <button onclick="goBack()">×</button>
     </div>
-    <div class="container">
-        <div class="header">
-            <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
-            <h2>فحص قوة كلمة المرور</h2>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="header">
+                <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
+                <h2>أداة فحص قوة كلمة المرور</h2>
+            </div>
+            <input type="password" id="password" placeholder="أدخل كلمة المرور الخاصة بك" oninput="checkPasswordStrength()">
+            <div class="strength-meter" id="strengthMeter"></div>
+            <p id="strengthText"></p>
+            <button id="clearPassword" onclick="clearPassword()">مسح</button>
         </div>
-        <input type="password" id="password" placeholder="أدخل كلمة المرور" oninput="checkPasswordStrength()">
-        <div class="strength-meter" id="strengthMeter" style="display: none;"></div>
-        <p id="strengthText"></p>
-        <button id="clearPassword" onclick="clearPassword()">مسح</button>
-    </div>
 
-    <!-- Recommendations container -->
-    <div class="recommendations-container">
-        <h3>توصيات:</h3>
-        <ul id="recommendations">
-            <li class="invalid">يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل.</li>
-            <li class="invalid">يجب أن تحتوي كلمة المرور على حرف كبير.</li>
-            <li class="invalid">يجب أن تحتوي كلمة المرور على حرف صغير.</li>
-            <li class="invalid">يجب أن تحتوي كلمة المرور على رقم.</li>
-            <li class="invalid">يجب أن تحتوي كلمة المرور على رمز خاص.</li>
-        </ul>
+        <!-- Recommendations container -->
+        <div class="recommendations-container">
+            <h3>التوصيات:</h3>
+            <ul id="recommendations">
+                <li class="invalid">يجب أن تكون كلمة المرور على الأقل 8 أحرف طويلة.</li>
+                <li class="invalid">يجب أن تحتوي كلمة المرور على حرف كبير.</li>
+                <li class="invalid">يجب أن تحتوي كلمة المرور على حرف صغير.</li>
+                <li class="invalid">يجب أن تحتوي كلمة المرور على رقم.</li>
+                <li class="invalid">يجب أن تحتوي كلمة المرور على رمز خاص (مثل !@#$%^&*).</li>
+            </ul>
+        </div>
     </div>
-
     <footer>
-        الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت
+        صمم وطوّر بواسطة الهيئة العامة للقوى العاملة &copy; 2024
     </footer>
 
-    <!-- Audio element for playing the welcome message -->
-    <audio id="welcomeAudio" src="welcome.mp3" preload="auto" loop></audio>
-
     <script>
-        function playWelcomeMessage() {
-            const audio = document.getElementById('welcomeAudio');
-            audio.play().catch(error => {
-                console.error('Error playing audio:', error);
+        function goBack() {
+            window.history.back();
+        }
+    
+        function clearPassword() {
+            document.getElementById('password').value = '';
+            document.getElementById('strengthMeter').style.width = '0%';
+            document.getElementById('strengthText').innerText = '';
+            document.querySelectorAll('#recommendations li').forEach(function(li) {
+                li.classList.add('invalid');
+                li.classList.remove('valid');
             });
         }
-
+    
         function checkPasswordStrength() {
             const password = document.getElementById('password').value;
             const strengthMeter = document.getElementById('strengthMeter');
             const strengthText = document.getElementById('strengthText');
             const recommendations = document.querySelectorAll('#recommendations li');
             let strength = 0;
-
-            // Check password strength
-            if (password.length >= 8) strength++;
-            if (/[A-Z]/.test(password)) strength++;
-            if (/[a-z]/.test(password)) strength++;
-            if (/[0-9]/.test(password)) strength++;
-            if (/[\W]/.test(password)) strength++;
-
-            // Update strength meter
-            strengthMeter.className = `strength-meter strength-${strength}`;
-            strengthMeter.style.display = 'block'; // Show the strength meter
-
-            // Update strength text in Arabic
-            let text;
+    
+            // Check password requirements and calculate strength
+            if (password.length >= 8) {
+                strength++;
+            }
+            if (/[A-Z]/.test(password)) {
+                strength++;
+            }
+            if (/[a-z]/.test(password)) {
+                strength++;
+            }
+            if (/\d/.test(password)) {
+                strength++;
+            }
+            if (/[^A-Za-z0-9]/.test(password)) {
+                strength++;
+            }
+    
+            // Update the strength meter and text
+            const strengthClasses = ['strength-0', 'strength-1', 'strength-2', 'strength-3', 'strength-4', 'strength-5'];
+            strengthMeter.className = `strength-meter ${strengthClasses[strength]}`;
+            strengthMeter.style.width = `${strength * 20}%`;
+    
             switch (strength) {
                 case 0:
+                    strengthText.innerText = 'كلمة المرور ضعيفة جدًا';
+                    break;
                 case 1:
-                    text = "ضعيف جدًا";
+                    strengthText.innerText = 'كلمة المرور ضعيفة';
                     break;
                 case 2:
-                    text = "ضعيف";
+                    strengthText.innerText = 'كلمة المرور متوسطة';
                     break;
                 case 3:
-                    text = "متوسط";
+                    strengthText.innerText = 'كلمة المرور قوية';
                     break;
                 case 4:
-                    text = "قوي";
+                    strengthText.innerText = 'كلمة المرور قوية جدًا';
                     break;
                 case 5:
-                    text = "قوي جدًا";
+                    strengthText.innerText = 'كلمة المرور ممتازة';
                     break;
-                default:
-                    text = "";
             }
-            strengthText.textContent = text;
-
-            // Update recommendations
-            recommendations.forEach((li, index) => {
-                if (
-                    (index === 0 && password.length >= 8) ||
-                    (index === 1 && /[A-Z]/.test(password)) ||
-                    (index === 2 && /[a-z]/.test(password)) ||
-                    (index === 3 && /[0-9]/.test(password)) ||
-                    (index === 4 && /[\W]/.test(password))
-                ) {
-                    li.classList.remove('invalid');
-                    li.classList.add('valid');
-                } else {
-                    li.classList.remove('valid');
-                    li.classList.add('invalid');
+    
+            // Update recommendations based on password strength
+            recommendations.forEach(function(li, index) {
+                switch (index) {
+                    case 0: // Minimum length requirement
+                        if (password.length >= 8) {
+                            li.classList.add('valid');
+                            li.classList.remove('invalid');
+                        } else {
+                            li.classList.add('invalid');
+                            li.classList.remove('valid');
+                        }
+                        break;
+                    case 1: // Uppercase letter requirement
+                        if (/[A-Z]/.test(password)) {
+                            li.classList.add('valid');
+                            li.classList.remove('invalid');
+                        } else {
+                            li.classList.add('invalid');
+                            li.classList.remove('valid');
+                        }
+                        break;
+                    case 2: // Lowercase letter requirement
+                        if (/[a-z]/.test(password)) {
+                            li.classList.add('valid');
+                            li.classList.remove('invalid');
+                        } else {
+                            li.classList.add('invalid');
+                            li.classList.remove('valid');
+                        }
+                        break;
+                    case 3: // Number requirement
+                        if (/\d/.test(password)) {
+                            li.classList.add('valid');
+                            li.classList.remove('invalid');
+                        } else {
+                            li.classList.add('invalid');
+                            li.classList.remove('valid');
+                        }
+                        break;
+                    case 4: // Special character requirement
+                        if (/[^A-Za-z0-9]/.test(password)) {
+                            li.classList.add('valid');
+                            li.classList.remove('invalid');
+                        } else {
+                            li.classList.add('invalid');
+                            li.classList.remove('valid');
+                        }
+                        break;
                 }
             });
         }
-
-        function clearPassword() {
-            document.getElementById('password').value = '';
-            document.getElementById('strengthMeter').className = 'strength-meter'; // Reset the strength meter
-            document.getElementById('strengthMeter').style.display = 'none'; // Hide the strength meter
-            document.getElementById('strengthText').textContent = ''; // Clear strength text
-            // Reset recommendations
-            document.querySelectorAll('#recommendations li').forEach(li => {
-                li.classList.add('invalid');
-                li.classList.remove('valid');
-            });
-        }
-
-        function goBack() {
-            window.location.href = 'welcome.html'; // Change 'welcome.html' to the actual path of your welcome page
-        }
     </script>
+    
+
 </body>
 </html>
