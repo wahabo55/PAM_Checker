@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الهيئة العامة للقوى العاملة</title>
+    <link rel="icon" href="PamLogo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f0f0;
+        }
+
+        .logo {
+            width: 200px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 1.5s ease-out forwards;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            60% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .text {
+            font-size: 24px;
+            color: #2980b9;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .subtext {
+            font-size: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        /* Redirect after a delay */
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+    </style>
+    <script>
+        setTimeout(() => {
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'welcome.html'; // Change 'main.html' to your main page filename
+            }, 1000);
+        }, 3000); // Adjust the duration to your preference
+    </script>
+</head>
+<body>
+    <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
+    <div class="text">الهيئة العامة للقوى العاملة قسم سرية المعلومات</div>
+    <div class="subtext">Public Authority of Manpower Information Security Section</div>
+</body>
+</html>
