@@ -1,232 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فاحص كلمة المرور</title>
+    <title>Password Checker | فاحص كلمة المرور</title>
     <link rel="icon" href="PamLogo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('building.jpg') no-repeat center center fixed;
-            background-size: cover;
-            filter: blur(8px);
-            z-index: -1;
-        }
+body {
+    font-family: 'Cairo', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('building.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    padding-bottom: 60px;
+    margin: 0;
+}
 
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 40px 20px;
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 600px;
-            box-sizing: border-box;
-        }
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
 
-        .content-box {
-            background: rgba(255, 255, 255, 0.85);
-            padding: 30px;
-            width: 100%;
-            max-width: 800px;
-            min-height: 400px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
-        }
+.content-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    max-width: 800px; /* Increased max-width for larger containers */
+    width: 90%;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
 
-        .content-box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
+.logo {
+    width: 120px;
+    margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-in-out;
+}
 
-        /* Professional logo animation */
-        .logo {
-            width: 160px;
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: scale(0.8); /* Start small */
-            animation: fadeInScale 1.5s ease-out forwards; /* Smooth, longer animation */
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            60% {
-                opacity: 0.7;
-                transform: scale(1.05); /* Slight overscale for a dynamic effect */
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1); /* Back to original size */
-            }
-        }
+h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
 
-        h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 32px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
+h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-family: 'Cairo', sans-serif;
+}
 
-        h1 {
-            font-size: 36px;
-            color: #2980b9;
-            margin-bottom: 30px;
-        }
+.button {
+    background: linear-gradient(45deg, #2980b9, #2c3e50);
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
 
-        .button {
-            padding: 20px 35px;
-            font-size: 20px;
-            margin: 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: #2980b9;
-            color: white;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
+.button:hover {
+    background: linear-gradient(45deg, #1f618d, #34495e);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
 
-        .button:hover {
-            background-color: #1f618d;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
+.whatsapp-button {
+    background: linear-gradient(45deg, #25d366, #128C7E);
+    padding: 10px 25px;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        footer {
-            background: linear-gradient(90deg, #2980b9, #2c3e50);
-            color: white;
-            padding: 15px;
-            height: auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
+.whatsapp-button:hover {
+    background: linear-gradient(45deg, #20b858, #0D6E5B);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
 
-        footer p {
-            margin: 0;
-            padding: 10px;
-            font-size: 16px;
-            text-align: center;
-        }
+footer {
+    background: linear-gradient(90deg, #2980b9, #2c3e50);
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
 
-        footer .footer-icons {
-            margin-top: 15px;
-        }
+footer p {
+    margin: 0;
+    font-size: 12px;
+}
 
-        footer .footer-icons a {
-            color: white;
-            text-decoration: none;
-            margin: 0 12px;
-            font-size: 24px;
-            transition: color 0.3s ease;
-        }
+/* Adjustments for mobile portrait screens */
+@media (max-width: 480px) and (orientation: portrait) {
+    .content-box {
+        padding: 20px;
+        max-width: 90%; /* Adjust width for smaller screens */
+    }
 
-        footer .footer-icons a:hover {
-            color: #f1c40f;
-        }
+    .logo {
+        width: 100px;
+        margin-bottom: 15px;
+    }
 
-        @media (max-width: 768px) {
-            .logo {
-                width: 140px;
-            }
+    h1 {
+        font-size: 22px;
+    }
 
-            h2 {
-                font-size: 28px;
-            }
+    h2 {
+        font-size: 18px;
+    }
 
-            h1 {
-                font-size: 32px;
-            }
+    .button {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
 
-            .button {
-                padding: 15px 30px;
-                font-size: 18px;
-            }
+    .whatsapp-button {
+        padding: 8px 20px;
+        font-size: 12px;
+    }
 
-            footer p {
-                font-size: 14px;
-            }
+    footer {
+        padding: 8px;
+    }
 
-            footer .footer-icons a {
-                font-size: 20px;
-            }
-        }
+    footer p {
+        font-size: 10px;
+    }
+}
 
-        @media (max-width: 480px) {
-            .content-box {
-                padding: 20px;
-            }
+/* For larger mobile portrait screens */
+@media (min-width: 481px) and (max-width: 768px) and (orientation: portrait) {
+    .content-box {
+        padding: 30px;
+        width: 85%; /* Wider for larger mobile screens */
+        max-width: 600px; /* Max width increased */
+    }
 
-            .logo {
-                width: 120px;
-            }
+    .logo {
+        width: 110px;
+    }
 
-            h2 {
-                font-size: 24px;
-            }
+    h1 {
+        font-size: 24px;
+    }
 
-            h1 {
-                font-size: 26px;
-            }
+    h2 {
+        font-size: 20px;
+    }
 
-            .button {
-                padding: 12px 25px;
-                font-size: 16px;
-            }
+    .button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
 
-            footer p {
-                font-size: 12px;
-            }
+    .whatsapp-button {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
 
-            footer .footer-icons a {
-                font-size: 18px;
-            }
-        }
+    footer {
+        padding: 10px;
+    }
+
+    footer p {
+        font-size: 12px;
+    }
+}
+
+/* Landscape (horizontal) mode adjustments for mobile screens */
+@media (orientation: landscape) and (max-width: 768px) {
+    body {
+        justify-content: flex-start;
+        padding-top: 20px;
+    }
+
+    .content-box {
+        max-width: 90%; /* Wider for landscape */
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        width: 100%;
+    }
+
+    .logo {
+        width: 150px; /* Increased logo size for landscape */
+        margin: 0;
+        margin-bottom: 20px;
+    }
+
+    h1,
+    h2 {
+        font-size: 24px; /* Increased font size for headings */
+        margin: 0;
+        padding: 0;
+    }
+
+    .button {
+        padding: 12px 20px;
+        font-size: 16px; /* Larger button text */
+        margin: 8px 0;
+    }
+
+    .whatsapp-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    footer {
+        padding: 10px;
+    }
+
+    footer p {
+        font-size: 12px;
+    }
+}
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="content-box">
-            <img src="PamLogo.png" alt="شعار الهيئة العامة للقوى العاملة" class="logo">
-            <h2>Welcome to Password Checker!</h2>
-            <h1>مرحباً بكم في فاحص كلمة المرور!</h1>
+
+
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/66fbeb25e5982d6c7bb7247f/1i940t2jp';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+    <div class="overlay"></div>
+
+    <div class="content-box">
+        <img src="PamLogo.png" alt="Logo" class="logo">
+        <div>
+            <h2>مرحباً بكم في فاحص كلمة المرور</h2>
+            <h1>Welcome to Password Checker</h1>
             <button class="button" onclick="window.location.href='English.html'">English</button>
             <button class="button" onclick="window.location.href='arabic2.html'">العربية</button>
+            <button class="button" onclick="window.location.href='about.html'">About Us | من نحن</button>
             <button class="button" onclick="window.location.href='map.html'">Attack Map | خريطة الاختراق</button>
             <button class="button" onclick="window.location.href='URLChecker.html'">File Checker | فاحص الملفات</button>
+
+            <!-- WhatsApp Button -->
+            <a href="https://wa.me/96524936584" class="whatsapp-button">
+                <i class="fab fa-whatsapp"></i> WhatsApp Us | اتصل بنا
+            </a>
         </div>
     </div>
 
@@ -235,5 +311,7 @@
     </footer>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 </body>
+
 </html>
