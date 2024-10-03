@@ -281,7 +281,7 @@
         </section>
     
         <footer>
-            <p>© 2024 الهيئة العامة للقوى العاملة. جميع الحقوق محفوظة.</p>
+            <p>الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت</p>
         </footer>
     
         <script>
@@ -290,23 +290,31 @@
                 document.getElementById('aboutEnglish').style.display = 'block';
                 document.getElementById('aboutArabic').style.display = 'none';
                 document.getElementById('homeButtonText').innerText = 'Home';
+        
+                // Update footer to English
+                document.querySelector('footer p').innerText = 'Public Authority of Manpower © 2024, All rights reserved by the Public Authority of Manpower - State of Kuwait';
             }
-    
+        
             function showArabic() {
                 document.getElementById('aboutEnglish').style.display = 'none';
                 document.getElementById('aboutArabic').style.display = 'block';
                 document.getElementById('homeButtonText').innerText = 'الرئيسية';
+        
+                // Update footer to Arabic
+                document.querySelector('footer p').innerText = 'الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت';
             }
-    
+        
             function goHome() {
                 // Navigate to the home page
                 window.location.href = 'welcome.html'; // Change this to your home page URL
             }
-    
+        
             // Initial display settings
             document.getElementById('aboutArabic').style.display = 'none'; // Hide Arabic section by default
             document.getElementById('aboutEnglish').style.display = 'block'; // Show English section by default
+            document.querySelector('footer p').innerText = 'Public Authority of Manpower © 2024, All rights reserved by the Public Authority of Manpower - State of Kuwait'; // Set footer to English by default
         </script>
+        
     </body>
     </html>
     
