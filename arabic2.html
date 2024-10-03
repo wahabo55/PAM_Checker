@@ -257,115 +257,122 @@
             const strength = getPasswordStrength(password);
     
             // Update the length indicator
-            lengthIndicator.textContent = 'طول كلمة المرور: ' + password.length; // Display password length
+            lengthIndicator.textContent = 'طول كلمة المرور: ' + password.length;
     
-            // Show the strength meter only if there's input
-            if (password) {
-                strengthMeter.style.display = 'block';
-                strengthMeter.style.width = (strength * 20) + '%'; // Each point gives 20% width
-                strengthMeter.style.backgroundColor = getStrengthColor(strength);
-    
-                // Update recommendations based on password strength
-                updateRecommendations(password);
-            } else {
-                // Hide the strength meter and recommendations when input is empty
-                strengthMeter.style.display = 'none';
-                strengthText.textContent = '';
-                resetRecommendations();
-            }
+            // Update the strength meter and text
+            updateStrengthMeter(strength);
+            updateRecommendations(password);
         });
     
         function getPasswordStrength(password) {
             let strength = 0;
-            const lengthCriteria = password.length >= 8; // Check for minimum length
-            const uppercaseCriteria = /[A-Z]/.test(password);
-            const lowercaseCriteria = /[a-z]/.test(password);
-            const numberCriteria = /[0-9]/.test(password);
-            const specialCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     
-            // Criteria points
-            if (lengthCriteria) strength++;
-            if (uppercaseCriteria) strength++;
-            if (lowercaseCriteria) strength++;
-            if (numberCriteria) strength++;
-            if (specialCriteria) strength++;
+            // Check password strength criteria
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
     
             return strength;
         }
     
-        function getStrengthColor(strength) {
+        function updateStrengthMeter(strength) {
+            // Update the strength meter based on the strength value
+            strengthMeter.style.display = 'block'; // Show the strength meter
+            strengthMeter.style.width = (strength * 20) + '%'; // Set width based on strength
+    
+            // Set color and text based on strength
             switch (strength) {
-                case 0:
                 case 1:
-                    return 'red';
+                    strengthMeter.style.background = 'red';
+                    strengthText.textContent = 'ضعيف جداً'; // Very Weak
+                    break;
                 case 2:
-                    return 'orange';
+                    strengthMeter.style.background = 'orange';
+                    strengthText.textContent = 'ضعيف'; // Weak
+                    break;
                 case 3:
-                    return 'yellow';
+                    strengthMeter.style.background = 'yellow';
+                    strengthText.textContent = 'متوسط'; // Moderate
+                    break;
                 case 4:
-                    return 'lightgreen';
+                    strengthMeter.style.background = 'lightgreen';
+                    strengthText.textContent = 'قوي'; // Strong
+                    break;
                 case 5:
-                    return 'green';
+                    strengthMeter.style.background = 'green';
+                    strengthText.textContent = 'قوي جداً'; // Very Strong
+                    break;
                 default:
-                    return 'red';
+                    strengthMeter.style.display = 'none'; // Hide if no strength
+                    strengthText.textContent = '';
+                    break;
+            }
+        }
+    
+        function updateRecommendations(password) {
+            const recommendations = recommendationsList.getElementsByTagName('li');
+            const strength = getPasswordStrength(password);
+            resetRecommendations(); // Reset recommendations before updating
+    
+            // Update recommendations based on the password strength
+            if (strength < 5) {
+                if (password.length < 8) {
+                    recommendations[4].classList.add('invalid');
+                } else {
+                    recommendations[4].classList.add('valid');
+                }
+                if (!/[A-Z]/.test(password)) {
+                    recommendations[0].classList.add('invalid');
+                } else {
+                    recommendations[0].classList.add('valid');
+                }
+                if (!/[a-z]/.test(password)) {
+                    recommendations[1].classList.add('invalid');
+                } else {
+                    recommendations[1].classList.add('valid');
+                }
+                if (!/[0-9]/.test(password)) {
+                    recommendations[2].classList.add('invalid');
+                } else {
+                    recommendations[2].classList.add('valid');
+                }
+                if (!/[^A-Za-z0-9]/.test(password)) {
+                    recommendations[3].classList.add('invalid');
+                } else {
+                    recommendations[3].classList.add('valid');
+                }
+            } else {
+                recommendations[0].classList.add('valid');
+                recommendations[1].classList.add('valid');
+                recommendations[2].classList.add('valid');
+                recommendations[3].classList.add('valid');
+                recommendations[4].classList.add('valid');
             }
         }
     
         function resetRecommendations() {
-            recommendationsList.querySelectorAll('li').forEach((li) => {
-                li.classList.remove('valid', 'invalid');
-                li.classList.add('invalid');
-            });
-        }
-    
-        function updateRecommendations(password) {
-            const lengthCriteria = password.length >= 8;
-            const uppercaseCriteria = /[A-Z]/.test(password);
-            const lowercaseCriteria = /[a-z]/.test(password);
-            const numberCriteria = /[0-9]/.test(password);
-            const specialCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
-            const criteria = [
-                { criteria: uppercaseCriteria, index: 0 },
-                { criteria: lowercaseCriteria, index: 1 },
-                { criteria: numberCriteria, index: 2 },
-                { criteria: specialCriteria, index: 3 },
-                { criteria: lengthCriteria, index: 4 }, // Added length criteria
-            ];
-    
-            criteria.forEach(({ criteria, index }) => {
-                const li = recommendationsList.children[index];
-                if (criteria) {
-                    li.classList.remove('invalid');
-                    li.classList.add('valid');
-                } else {
-                    li.classList.remove('valid');
-                    li.classList.add('invalid');
-                }
-            });
-    
-            // Provide feedback based on length criteria
-            if (lengthCriteria) {
-                strengthText.textContent = 'كلمة المرور قوية';
-            } else {
-                strengthText.textContent = 'كلمة المرور ضعيفة - يجب أن تحتوي على 8 أحرف على الأقل'; // Feedback for length
+            const recommendations = recommendationsList.getElementsByTagName('li');
+            for (let i = 0; i < recommendations.length; i++) {
+                recommendations[i].classList.remove('valid', 'invalid');
             }
         }
     
-        // Clear password and reset state
+        // Clear password button functionality
         document.getElementById('clearPassword').addEventListener('click', function () {
             passwordInput.value = '';
+            updateStrengthMeter(0); // Reset strength meter
             lengthIndicator.textContent = 'طول كلمة المرور: 0'; // Reset length indicator
-            resetRecommendations();
-            strengthMeter.style.display = 'none'; // Hide strength meter
-            strengthText.textContent = '';
+            resetRecommendations(); // Reset recommendations
         });
     
         // Back button functionality
         document.getElementById('backButton').addEventListener('click', function () {
-            window.history.back();
+            window.history.back(); // Go back to the previous page
         });
     </script>
+    
     
 </body>
 
