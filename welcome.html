@@ -46,7 +46,11 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     max-width: 800px; /* Increased max-width for larger containers */
     width: 90%;
+    /* Add vendor prefixes */
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    /* Fallback background if blur doesn't work */
+    background-color: rgba(139, 138, 138, 0.219);
     transition: all 0.3s ease;
 }
 
@@ -266,6 +270,7 @@ footer p {
         font-size: 12px;
     }
 }
+
     </style>
 </head>
 
@@ -311,7 +316,15 @@ footer p {
     </footer>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+<script>
+    // Check if user has already been redirected
+if (!sessionStorage.getItem('redirectedFromPasswordChecker')) {
+    // Set the flag in sessionStorage
+    sessionStorage.setItem('redirectedFromPasswordChecker', 'true');
+    // Redirect to first.html when the page is loaded
+    window.location.href = "first.html";
+}
+</script>
 </body>
 
 </html>
