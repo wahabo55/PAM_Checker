@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Awareness Quiz</title>
+    <link rel="icon" href="PamLogo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            position: relative;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('building.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: blur(8px);
+            z-index: -1;
+        }
+
+        .container {
+            background-color: rgba(40, 44, 52, 0.9);
+            border-radius: 15px; /* Further reduced radius */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            padding: 15px; /* Further reduced padding */
+            width: 85%; /* Further reduced width */
+            max-width: 350px; /* Further reduced max width */
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 100px; /* Further reduced logo size */
+            margin-bottom: 15px; /* Further reduced margin */
+        }
+
+        h1, h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #61dafb;
+            margin-bottom: 10px; /* Further reduced margin */
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.5em; /* Further reduced font size */
+        }
+
+        h2 {
+            font-size: 1.3em; /* Further reduced font size */
+        }
+
+        .button {
+            background: linear-gradient(45deg, #2980b9, #2c3e50);
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+        .button:hover {
+            background-color: #21a1f1;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #444;
+            border-radius: 6px; /* Further reduced radius */
+            margin: 10px 0; /* Further reduced margin */
+        }
+
+        .progress-bar div {
+            height: 8px; /* Further reduced height */
+            width: 0;
+            background-color: #61dafb;
+            border-radius: 6px; /* Further reduced radius */
+            transition: width 0.3s ease;
+        }
+
+        .quiz-question {
+            font-size: 1em; /* Further reduced font size */
+            color: #ffffff;
+            margin: 10px 0; /* Further reduced margin */
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-option {
+            background-color: #444;
+            color: #ffffff;
+            border: 2px solid #61dafb;
+            padding: 8px; /* Further reduced padding */
+            margin: 6px 0; /* Further reduced margin */
+            cursor: pointer;
+            border-radius: 8px; /* Further reduced radius */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 300px; /* Further reduced max width */
+            font-size: 0.9em; /* Further reduced font size */
+            font-weight: 600;
+        }
+
+        .quiz-option:hover {
+            background-color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback {
+            font-size: 0.9em; /* Further reduced font size */
+            margin-top: 10px; /* Further reduced margin */
+            color: #16a085;
+            display: none;
+        }
+
+        .score-box, .review-box {
+            display: none;
+            margin-top: 15px; /* Further reduced margin */
+        }
+
+        footer {
+    background: linear-gradient(90deg, #2980b9, #2c3e50);
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 12px;
+}
+
+/* Responsive adjustments for footer */
+@media (max-width: 768px) {
+    footer {
+        padding: 8px; /* Reduce padding on smaller screens */
+    }
+    footer p {
+        font-size: 10px; /* Adjust font size */
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        padding: 6px; /* Further reduce padding on very small screens */
+    }
+    footer p {
+        font-size: 9px; /* Further adjust font size */
+    }
+}
+
+        .timer {
+            font-size: 1em; /* Further reduced font size */
+            color: #e67e22;
+            margin: 10px 0; /* Further reduced margin */
+        }
+
+        .timer-circle {
+            width: 50px; /* Further reduced size */
+            height: 50px; /* Further reduced size */
+            border-radius: 50%;
+            border: 6px solid #444; /* Further reduced border size */
+            border-top-color: #61dafb;
+            animation: spin 15s linear forwards;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .timer-text {
+            position: absolute;
+            font-weight: bold;
+            color: #61dafb;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.3em; /* Further reduced font size */
+            }
+            h2 {
+                font-size: 1.1em; /* Further reduced font size */
+            }
+            .button {
+                padding: 6px 12px; /* Further reduced padding */
+                font-size: 0.8em; /* Further reduced font size */
+            }
+            .quiz-option {
+                font-size: 0.8em; /* Further reduced font size */
+            }
+            .quiz-question {
+                font-size: 0.9em; /* Further reduced font size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.1em; /* Further reduced font size */
+            }
+            h2 {
+                font-size: 1em; /* Further reduced font size */
+            }
+            .button {
+                padding: 5px 10px; /* Further reduced padding */
+                font-size: 0.7em; /* Further reduced font size */
+            }
+            .quiz-option {
+                font-size: 0.7em; /* Further reduced font size */
+            }
+            .quiz-question {
+                font-size: 0.7em; /* Further reduced font size */
+            }
+        }
+
+        .home-button {
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Red color gradient */
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.home-button:hover {
+    background: linear-gradient(45deg, #c0392b, #a93226);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.705); /* Adjust opacity as needed */
+    z-index: -1; /* Make sure it's behind the content */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="content-box">
+            <img src="PamLogo.png" alt="PAM Logo" class="logo">
+            <h2>Cybersecurity Awareness Quiz</h2>
+            <h1>اختبار التوعية بالأمن السيبراني</h1>
+
+            
+            <div>
+                <button class="button" id="btn-en" onclick="startQuiz('en')">English</button>
+                <button class="button" id="btn-ar" onclick="startQuiz('ar')">العربية</button>
+                <button class="home-button" onclick="window.location.href='welcome.html'">Home | الرئيسية</button>
+
+            </div>
+            <div id="quiz-content" style="display:none;">
+                <div class="timer" id="timer">Time Left: <span id="time-left">15</span> seconds</div>
+                <div class="progress-bar"><div id="progress"></div></div>
+                <p class="quiz-question" id="question-text"></p>
+                <div class="quiz-options" id="options-container"></div>
+                <p class="feedback" id="feedback"></p>
+            </div>
+            <div class="score-box" id="score-box">
+                <h2 id="score-text"></h2>
+                <button class="button" id="btn-retake" onclick="resetQuiz()"></button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>الهيئة العامة للقوى العاملة © 2024 , جميع حقوق النشر محفوظة لدى الهيئة العامة للقوى العاملة - دولة الكويت</p>
+    </footer>
+    
+    <script>
+        const questions = {
+            en: [
+                { question: "What is phishing?", options: ["A type of malware", "A technique to steal sensitive information", "A network protocol", "None of the above"], answer: 1 },
+                { question: "What should you do if you receive an unsolicited email?", options: ["Open it", "Delete it", "Reply with your personal information", "Forward it to your friends"], answer: 1 },
+                { question: "How often should you change your passwords?", options: ["Every day", "Every month", "Every few months", "Never"], answer: 2 },
+                { question: "What is a strong password?", options: ["12345", "Password", "P@ssw0rd123", "Your birth date"], answer: 2 },
+                { question: "What should you do if your account has been hacked?", options: ["Ignore it", "Contact support", "Delete your account", "Change your password"], answer: 3 },
+                { question: "What is two-factor authentication (2FA)?", options: ["A backup email", "A second password", "A method requiring two forms of identification", "A stronger password"], answer: 2 },
+                { question: "Which of the following is an example of social engineering?", options: ["Sending malware", "Phishing emails", "Installing a firewall", "Using antivirus software"], answer: 1 },
+                { question: "What is a VPN used for?", options: ["Increasing download speed", "Encrypting internet traffic", "Hiding your identity from the internet", "Both B and C"], answer: 3 },
+                { question: "How can you protect yourself from malware?", options: ["Installing antivirus software", "Opening suspicious email attachments", "Ignoring software updates", "Sharing your passwords"], answer: 0 },
+                { question: "What should you do if you lose your device?", options: ["Leave it", "Notify your contacts", "Track it and lock it remotely", "Nothing"], answer: 2 }
+            ],
+            ar: [
+                { question: "ما هو الصيد الاحتيالي؟", options: ["نوع من البرمجيات الخبيثة", "تقنية لسرقة المعلومات الحساسة", "بروتوكول شبكة", "لا شيء مما سبق"], answer: 1 },
+                { question: "ماذا يجب أن تفعل إذا تلقيت بريدًا إلكترونيًا غير مرغوب فيه؟", options: ["افتحه", "احذفه", "رد بمعلوماتك الشخصية", "أعد توجيهه لأصدقائك"], answer: 1 },
+                { question: "كم مرة يجب عليك تغيير كلمات المرور الخاصة بك؟", options: ["كل يوم", "كل شهر", "كل عدة أشهر", "أبدا"], answer: 2 },
+                { question: "ما هو تعريف كلمة المرور القوية؟", options: ["12345", "كلمة السر", "P@ssw0rd123", "تاريخ ميلادك"], answer: 2 },
+                { question: "ماذا يجب عليك فعله إذا تم اختراق حسابك؟", options: ["تجاهله", "اتصل بالدعم الفني", "احذف حسابك", "قم بتغيير كلمة المرور الخاصة بك"], answer: 3 },
+                { question: "ما هو التحقق بخطوتين (2FA)؟", options: ["بريد إلكتروني احتياطي", "كلمة مرور ثانية", "طريقة تتطلب نوعين من التعريف", "كلمة مرور أقوى"], answer: 2 },
+                { question: "أي من التالي يعد مثالًا على الهندسة الاجتماعية؟", options: ["إرسال برمجيات خبيثة", "رسائل البريد الاحتيالي", "تثبيت جدار ناري", "استخدام برنامج مكافحة الفيروسات"], answer: 1 },
+                { question: "ما هو استخدام VPN؟", options: ["زيادة سرعة التحميل", "تشفير حركة المرور عبر الإنترنت", "إخفاء هويتك عن الإنترنت", "كلا ب و ج"], answer: 3 },
+                { question: "كيف يمكنك حماية نفسك من البرمجيات الخبيثة؟", options: ["تثبيت برنامج مكافحة الفيروسات", "فتح مرفقات البريد الإلكتروني المشبوهة", "تجاهل تحديثات البرامج", "مشاركة كلمات المرور الخاصة بك"], answer: 0 },
+                { question: "ماذا تفعل إذا فقدت جهازك؟", options: ["اتركه", "أبلغ جهات الاتصال الخاصة بك", "قم بتتبعه وقفله عن بُعد", "لا شيء"], answer: 2 }
+            ]
+        };
+    
+        let currentQuestionIndex = 0;
+let score = 0;
+let timerInterval;
+
+// Shuffle function
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function startQuiz(language) {
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById('btn-en').style.display = 'none';
+    document.getElementById('btn-ar').style.display = 'none';
+    document.getElementsByClassName('home-button')[0].style.display = 'none'; // Hide the Home button
+    document.getElementById('quiz-content').style.display = 'block';
+    document.getElementById('score-box').style.display = 'none';
+
+    // Shuffle questions before displaying them
+    questions[language] = shuffle(questions[language]);
+
+    showQuestion(language);
+}
+
+function startTimer(language) {
+    let timeLeft = 15;  
+    document.getElementById('time-left').innerText = timeLeft;
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('time-left').innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showFeedback(false, language); // Show incorrect feedback
+            setTimeout(() => nextQuestion(language), 1000); // Move to the next question after 1 second
+        }
+    }, 1000);
+}
+
+function showQuestion(language) {
+    const question = questions[language][currentQuestionIndex];
+    document.getElementById('question-text').innerText = question.question;
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+
+    question.options.forEach((option, index) => {
+        const optionButton = document.createElement('div');
+        optionButton.classList.add('quiz-option');
+        optionButton.innerText = option;
+        optionButton.onclick = () => selectOption(index, language);
+        optionsContainer.appendChild(optionButton);
+    });
+
+    document.getElementById('feedback').style.display = 'none';
+    startTimer(language); // Pass the language to the timer
+    updateProgress();
+}
+
+function selectOption(selectedIndex, language) {
+    const question = questions[language][currentQuestionIndex];
+    const isCorrect = selectedIndex === question.answer;
+    showFeedback(isCorrect, language);
+    if (isCorrect) {
+        score++;
+    }
+    clearInterval(timerInterval); // Clear the timer when an option is selected
+    setTimeout(() => nextQuestion(language), 1000); // Move to the next question after 1 second
+}
+
+function showFeedback(isCorrect, language) {
+    const feedbackElement = document.getElementById('feedback');
+    feedbackElement.style.display = 'block';
+    feedbackElement.innerText = isCorrect 
+        ? (language === 'en' ? "Correct!" : "صحيح!") 
+        : (language === 'en' ? "Incorrect!" : "خطأ!");
+}
+
+function nextQuestion(language) {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions[language].length) {
+        showQuestion(language);
+    } else {
+        endQuiz(language);
+    }
+}
+
+function updateProgress() {
+    const progress = (currentQuestionIndex / questions.en.length) * 100;
+    document.getElementById('progress').style.width = `${progress}%`;
+}
+
+function endQuiz(language) {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('score-text').innerText = language === 'en' 
+        ? `Your Score: ${score} / ${questions.en.length}` 
+        : `نتيجتك: ${score} / ${questions.ar.length}`;
+    document.getElementById('score-box').style.display = 'block';
+    document.getElementById('btn-retake').innerText = language === 'en' 
+        ? "Retake Quiz" 
+        : "إعادة اختبار";
+}
+
+function resetQuiz() {
+    document.getElementById('score-box').style.display = 'none';
+    document.getElementById('btn-en').style.display = 'inline-block';
+    document.getElementById('btn-ar').style.display = 'inline-block';
+    clearInterval(timerInterval);
+}
+
+
+    </script>
+    
+</body>
+</html>

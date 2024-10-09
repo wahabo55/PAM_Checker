@@ -271,6 +271,34 @@ footer p {
     }
 }
 
+.quiz-button {
+    background: linear-gradient(45deg, #e74c3c, #c0392b); /* Red color gradient */
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.quiz-button:hover {
+    background: linear-gradient(45deg, #c0392b, #a93226);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.flag-icon {
+            width: 30px; /* Adjust the width as needed */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 10px; /* Space between the flag and text */
+            vertical-align: middle; /* Align the flag vertically with the text */
+        }
+
     </style>
 </head>
 
@@ -298,12 +326,16 @@ footer p {
         <div>
             <h2>مرحباً بكم في فاحص كلمة المرور</h2>
             <h1>Welcome to Password Checker</h1>
-            <button class="button" onclick="window.location.href='English.html'">English</button>
-            <button class="button" onclick="window.location.href='arabic2.html'">العربية</button>
+            <button class="button" onclick="window.location.href='English.html'">
+                <img src="uk-flag.png" alt="UK Flag" class="flag-icon"> English | Password checker
+            </button>
+            <button class="button" onclick="window.location.href='arabic2.html'">
+                <img src="kuwait-flag.webp" alt="Kuwait Flag" class="flag-icon"> العربية | فاحص كلمة المرور
+            </button>
             <button class="button" onclick="window.location.href='about.html'">About Us | من نحن</button>
             <button class="button" onclick="window.location.href='map.html'">Attack Map | خريطة الاختراق</button>
             <button class="button" onclick="window.location.href='URLChecker.html'">File Checker | فاحص الملفات</button>
-
+            <button class="quiz-button" onclick="window.location.href='quiz.html'">Quiz | اختبار</button>
             <!-- WhatsApp Button -->
             <a href="https://wa.me/96524936584" class="whatsapp-button">
                 <i class="fab fa-whatsapp"></i> WhatsApp Us | اتصل بنا
